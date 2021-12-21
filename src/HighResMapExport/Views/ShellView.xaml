@@ -1,0 +1,110 @@
+﻿<UserControl
+    x:Class="HighResExport.Views.ShellView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
+    xmlns:local="clr-namespace:HighResExport.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:HighResExport.ViewModels"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance viewModels:ShellViewModel}"
+    mc:Ignorable="d">
+    <DockPanel>
+
+        <DockPanel DockPanel.Dock="Top">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="3"
+                    Text="Map View Control" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="3"
+                    Text="{Binding ElementName=MapView, Path=ActualHeight, StringFormat=H {0}}" />
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="3"
+                    Text="{Binding ElementName=MapView, Path=ActualWidth, StringFormat=W {0}}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="3"
+                    Text="Output Image" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="3"
+                    Foreground="#FF2200"
+                    Text="{Binding OutputHeight}" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="3"
+                    Foreground="#FF2200"
+                    Text="{Binding OutputWidth}" />
+            </Grid>
+            <StackPanel DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="3">Output DPI:</TextBlock>
+                    <TextBox
+                        Width="49"
+                        Margin="3"
+                        DockPanel.Dock="Top"
+                        Text="{Binding OutputDpi, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock
+                        Margin="3"
+                        Foreground="#FF2200"
+                        ToolTip="The maximum size seems to be specific to the machines capabilities. For this development machine a height or width greater than 8100 causes a crash">
+                        Increase DPI Value Until Export Fails... 600, 900, 1200 etc
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="3">Output File:</TextBlock>
+                    <TextBox
+                        Width="420"
+                        Margin="3"
+                        VerticalAlignment="Center"
+                        DockPanel.Dock="Top"
+                        Text="{Binding OutputFile}" />
+                    <Button
+                        x:Name="ExportMap"
+                        Margin="6"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                        Export
+                    </Button>
+                </StackPanel>
+
+            </StackPanel>
+
+        </DockPanel>
+        <ProgressBar
+            Height="2"
+            DockPanel.Dock="Top"
+            IsIndeterminate="True"
+            Visibility="{Binding ProgressBarVisibility}" />
+
+        <esri:MapView x:Name="MapView" IsTabStop="False">
+            <esri:Map MaxScale="1">
+                <esri:ArcGISTiledLayer Id="BaseMap" Source="http://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer" />
+            </esri:Map>
+        </esri:MapView>
+
+
+    </DockPanel>
+</UserControl>
