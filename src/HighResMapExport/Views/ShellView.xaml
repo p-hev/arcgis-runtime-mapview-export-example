@@ -72,6 +72,12 @@
                         ToolTip="The maximum size seems to be specific to the machines capabilities. For this development machine a height or width greater than 8100 causes a crash">
                         Increase DPI Value Until Export Fails... 600, 900, 1200 etc
                     </TextBlock>
+                    <Button
+                        x:Name="MakeItCrash"
+                        Margin="6"
+                        VerticalAlignment="Center">
+                        Make it Crash
+                    </Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="3">Output File:</TextBlock>

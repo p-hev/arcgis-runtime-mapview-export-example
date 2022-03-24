@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.Symbology;
 using Esri.ArcGISRuntime.UI.Controls;
 using HighResExport.Extensions;
 using HighResExport.Views;
@@ -47,13 +48,19 @@ namespace HighResExport.ViewModels
             }
         }
 
+        public void MakeItCrash()
+        {
+            OutputDpi = 2800;
+            ExportMap();
+        }
+
         public void ExportMap()
         {
             ExportAndWriteToDisk().ContinueWith((t) =>
             {
                 if (t.IsFaulted)
                 {
-                    MessageBox.Show($"Error exporting mapview to image");
+                    MessageBox.Show($"Error exporting mapview to image \n{t.Exception}");
                 }
             });
         }
